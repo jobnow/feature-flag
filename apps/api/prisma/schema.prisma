@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  environments Environment[]
+
+  @@map("projects")
+}
+
+model Environment {
+  id                String   @id @default(uuid())
+  projectId         String
+  key               String
+  name              String
+  runtimeApiKeyHash String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  flags    Flag[]
+  segments Segment[]
+
+  @@unique([projectId, key])
+  @@map("environments")
+}
+
+model Flag {
+  id              String      @id @default(uuid())
+  environmentId   String
+  key             String
+  type            FlagType
+  enabled         Boolean     @default(true)
+  defaultValueJson String
+  rolloutPercent  Int?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  environment Environment @relation(fields: [environmentId], references: [id], onDelete: Cascade)
+
+  segmentOverrides FlagSegmentOverride[]
+
+  @@unique([environmentId, key])
+  @@map("flags")
+}
+
+enum FlagType {
+  boolean
+  string
+  number
+  json
+}
+
+model Segment {
+  id            String   @id @default(uuid())
+  environmentId String
+  key           String
+  name          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  environment Environment @relation(fields: [environmentId], references: [id], onDelete: Cascade)
+
+  users    SegmentUser[]
+  overrides FlagSegmentOverride[]
+
+  @@unique([environmentId, key])
+  @@map("segments")
+}
+
+model SegmentUser {
+  id         String   @id @default(uuid())
+  segmentId  String
+  userId     String
+  createdAt  DateTime @default(now())
+
+  segment Segment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+
+  @@unique([segmentId, userId])
+  @@map("segment_users")
+}
+
+model FlagSegmentOverride {
+  id        String   @id @default(uuid())
+  flagId    String
+  segmentId String
+  valueJson String
+  createdAt DateTime @default(now())
+
+  flag    Flag    @relation(fields: [flagId], references: [id], onDelete: Cascade)
+  segment Segment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+
+  @@unique([flagId, segmentId])
+  @@map("flag_segment_overrides")
+}

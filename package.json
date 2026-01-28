@@ -1,0 +1,25 @@
+{
+  "name": "feature-flag-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Feature Flag Service - Mini LaunchDarkly",
+  "scripts": {
+    "dev": "pnpm --filter api dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "prisma:migrate": "pnpm -C apps/api prisma migrate dev",
+    "prisma:generate": "pnpm -C apps/api prisma generate",
+    "prisma:studio": "pnpm -C apps/api prisma studio"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
