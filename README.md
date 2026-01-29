@@ -1,16 +1,53 @@
-# Feature Flag Service
+# 🚀 Feature Flag Service
 
-Um serviço completo de Feature Flags (mini LaunchDarkly) construído com NestJS, Prisma, PostgreSQL e Redis.
+<div align="center">
 
-## 🎯 Visão Geral
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Node](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)
+![TypeScript](https://img.shields.io/badge/typescript-5.3.3-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![NestJS](https://img.shields.io/badge/nestjs-10.3.0-e0234e.svg)
+![Prisma](https://img.shields.io/badge/prisma-5.9.1-2D3748.svg)
 
-Este projeto fornece uma solução completa para gerenciamento e avaliação de feature flags, permitindo:
+**Um serviço completo de Feature Flags open-source (alternativa ao LaunchDarkly) construído com NestJS, Prisma, PostgreSQL e Redis.**
 
-- **Admin API**: CRUD completo de projetos, ambientes, flags e segmentos
-- **Runtime API**: Endpoints otimizados para aplicações consumirem flags avaliadas
-- **Engine de Avaliação**: Sistema determinístico com prioridades claras
-- **Cache Inteligente**: Snapshot em Redis para performance máxima
-- **Segurança**: JWT para admin, API Keys com hash para runtime
+[Features](#-features) • [Quick Start](#-quick-start) • [Documentação](#-documentação) • [Contribuir](#-contribuindo)
+
+[English](./README.en.md) | [Português](./README.md)
+
+</div>
+
+---
+
+## ✨ Por que usar este projeto?
+
+- 🎯 **Open Source**: Alternativa gratuita ao LaunchDarkly
+- ⚡ **Performance**: Cache Redis com snapshots otimizados
+- 🔒 **Segurança**: API Keys com hash bcrypt, JWT para admin
+- 🎨 **Fácil de usar**: SDK Node.js incluído, Swagger completo
+- 🧪 **Testado**: Engine de avaliação com testes unitários
+- 🚀 **Production Ready**: Docker Compose, migrations, logging estruturado
+- 📦 **Monorepo**: Estrutura moderna com pnpm workspaces
+
+## 🎯 Features
+
+- ✅ **Admin API Completa**: CRUD de projetos, ambientes, flags e segmentos
+- ✅ **Runtime API Otimizada**: Endpoints de alta performance para consumo em produção
+- ✅ **Engine de Avaliação Inteligente**: Sistema determinístico com prioridades claras
+  - Flags desabilitadas → retorna default
+  - Override por segmento → prioridade máxima
+  - Rollout percentual → distribuição determinística
+  - Valor padrão → fallback seguro
+- ✅ **Cache Inteligente**: Snapshot Redis por ambiente (TTL configurável)
+- ✅ **Segurança Robusta**: 
+  - JWT para Admin API
+  - API Keys com hash bcrypt (nunca em texto puro)
+  - Validação de tipos com class-validator
+- ✅ **SDK Node.js**: Cliente TypeScript pronto para uso
+- ✅ **Documentação Swagger**: API totalmente documentada em `/docs`
+- ✅ **Testes Unitários**: Engine de avaliação 100% testado
+- ✅ **Docker Ready**: Docker Compose com PostgreSQL + Redis + API
+- ✅ **TypeScript**: 100% tipado, zero `any` desnecessário
 
 ## 🏗️ Arquitetura
 
@@ -49,7 +86,9 @@ Este projeto fornece uma solução completa para gerenciamento e avaliação de 
 └─────────────────────────────────┘
 ```
 
-## 🚀 Como Rodar
+## 🚀 Quick Start
+
+### ⚡ Setup em 5 minutos
 
 ### Pré-requisitos
 
@@ -308,25 +347,31 @@ Os testes focam no engine de avaliação (`evaluate.spec.ts`), garantindo:
 ```
 feature-flag-service/
 ├── apps/
-│   └── api/                 # NestJS API
+│   └── api/                      # NestJS API
 │       ├── src/
 │       │   ├── modules/
-│       │   │   ├── auth/           # JWT authentication
-│       │   │   ├── projects/      # CRUD projetos
-│       │   │   ├── environments/  # CRUD ambientes + API keys
-│       │   │   ├── flags/         # CRUD flags
-│       │   │   ├── segments/      # CRUD segmentos + overrides
-│       │   │   ├── runtime/       # Runtime API + engine
-│       │   │   ├── cache/         # Redis service
-│       │   │   └── prisma/        # Prisma client
+│       │   │   ├── auth/         # 🔐 JWT authentication
+│       │   │   ├── projects/     # 📦 CRUD projetos
+│       │   │   ├── environments/ # 🌍 CRUD ambientes + API keys
+│       │   │   ├── flags/        # 🚩 CRUD flags
+│       │   │   ├── segments/     # 👥 CRUD segmentos + overrides
+│       │   │   ├── runtime/      # ⚡ Runtime API + engine
+│       │   │   ├── cache/        # 💾 Redis service
+│       │   │   └── prisma/       # 🗄️ Prisma client
 │       │   └── main.ts
 │       └── prisma/
-│           └── schema.prisma
+│           └── schema.prisma     # 📋 Database schema
 ├── packages/
-│   └── sdk-node/            # SDK Node.js
-├── docker-compose.yml
-├── .env.example
-└── README.md
+│   └── sdk-node/                 # 📦 SDK Node.js TypeScript
+├── .github/
+│   ├── workflows/                # 🔄 CI/CD
+│   └── ISSUE_TEMPLATE/          # 📝 Templates
+├── docker-compose.yml            # 🐳 Docker setup
+├── .env.example                  # ⚙️ Environment variables
+├── README.md                     # 📖 This file
+├── CONTRIBUTING.md               # 🤝 How to contribute
+├── ROADMAP.md                    # 🗺️ Future plans
+└── CHANGELOG.md                  # 📝 Version history
 ```
 
 ## 🛠️ Tecnologias
@@ -370,10 +415,80 @@ pnpm build
 cd packages/sdk-node && pnpm build
 ```
 
-## 📄 Licença
+## 📊 Estatísticas do Projeto
 
-MIT
+- 📦 **100% TypeScript** - Zero `any` desnecessário
+- 🧪 **Cobertura de Testes** - Engine de avaliação testado
+- 📚 **Documentação Completa** - Swagger + README + Exemplos
+- 🔒 **Segurança First** - API Keys com hash, JWT, validação de tipos
+- ⚡ **Performance** - Cache Redis, queries otimizadas
+
+## 🌟 Casos de Uso
+
+- **Rollout Gradual**: Libere features para 10%, 25%, 50%, 100% dos usuários
+- **A/B Testing**: Distribua usuários entre variantes A e B deterministicamente
+- **Beta Testing**: Ative features apenas para grupos específicos (segmentos)
+- **Kill Switch**: Desative features instantaneamente em produção
+- **Feature Toggles**: Controle de features por ambiente (dev, staging, prod)
+
+## 📈 Roadmap
+
+- [ ] SDK para Python
+- [ ] SDK para Go
+- [ ] Dashboard Web (React/Next.js)
+- [ ] Métricas e Analytics
+- [ ] Webhooks para eventos
+- [ ] Suporte a variantes (A/B testing avançado)
+- [ ] CLI tool
+
+Veja [ROADMAP.md](./ROADMAP.md) para mais detalhes.
 
 ## 🤝 Contribuindo
 
-Contribuições são bem-vindas! Por favor, abra uma issue ou PR.
+Contribuições são muito bem-vindas! Este projeto existe graças a todos os contribuidores.
+
+Veja [CONTRIBUTING.md](./CONTRIBUTING.md) para saber como contribuir.
+
+### Como contribuir:
+
+1. 🍴 Fork o projeto
+2. 🌿 Crie uma branch (`git checkout -b feature/AmazingFeature`)
+3. 💾 Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. 📤 Push para a branch (`git push origin feature/AmazingFeature`)
+5. 🔃 Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja [LICENSE](./LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+**Ricardo Gomes**
+
+- 💻 GitHub: [@seu-usuario](https://github.com/seu-usuario)
+- 💼 LinkedIn: [Ricardo Gomes](https://linkedin.com/in/seu-perfil)
+- 📧 Email: seu-email@exemplo.com
+
+**💡 Dica**: Se este projeto te ajudou, considere:
+- ⭐ Dar uma estrela no GitHub
+- 🍴 Fazer um fork
+- 🤝 Contribuir com melhorias
+- 📢 Compartilhar com sua rede
+
+## 🙏 Agradecimentos
+
+- [NestJS](https://nestjs.com/) - Framework incrível
+- [Prisma](https://www.prisma.io/) - ORM moderno
+- Todos os contribuidores que ajudam a melhorar este projeto
+
+## ⭐ Se este projeto te ajudou, considere dar uma estrela!
+
+---
+
+<div align="center">
+
+**Feito com ❤️ usando NestJS, TypeScript e muito café ☕**
+
+[⬆ Voltar ao topo](#-feature-flag-service)
+
+</div>

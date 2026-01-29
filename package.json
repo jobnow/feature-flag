@@ -1,8 +1,36 @@
 {
   "name": "feature-flag-service",
   "version": "1.0.0",
-  "private": true,
-  "description": "Feature Flag Service - Mini LaunchDarkly",
+  "private": false,
+  "description": "🚀 Open-source Feature Flag Service - Alternative to LaunchDarkly. Built with NestJS, Prisma, PostgreSQL, and Redis.",
+  "keywords": [
+    "feature-flags",
+    "feature-toggle",
+    "feature-flag-service",
+    "launchdarkly-alternative",
+    "nestjs",
+    "typescript",
+    "prisma",
+    "postgresql",
+    "redis",
+    "microservices",
+    "api",
+    "sdk",
+    "ab-testing",
+    "rollout",
+    "segment",
+    "open-source"
+  ],
+  "author": "Ricardo Gomes",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/feature-flag-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seu-usuario/feature-flag-service/issues"
+  },
+  "homepage": "https://github.com/seu-usuario/feature-flag-service#readme",
   "scripts": {
     "dev": "pnpm --filter api dev",
     "build": "pnpm -r build",
